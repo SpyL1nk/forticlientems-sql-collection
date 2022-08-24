@@ -1,7 +1,8 @@
 SELECT TOP (1000)
-    Devices.host AS devicename,
-    DATEADD(s, FortiClients.last_seen, '1970-01-01') AS lastseen
+	FortiClients.devices_id AS device_id,
+	Devices.host AS device_name,
+    DATEADD(s, FortiClients.last_seen, '1970-01-01') AS last_seen
 FROM [FCM_Default].[dbo].[FortiClients]
-INNER JOIN Devices ON FortiClients.devices_id = Devices.id
+INNER JOIN [FCM_Default].[dbo].[Devices] ON FortiClients.devices_id = Devices.id
 WHERE DATEDIFF(second, DATEADD(s, FortiClients.last_seen, '1970-01-01'), GETDATE()) >= 86400 -- 24 hours
-ORDER BY lastseen DESC;
+ORDER BY last_seen DESC;
